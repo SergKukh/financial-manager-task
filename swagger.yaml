@@ -1,0 +1,366 @@
+openapi: "3.0.0"
+paths:
+  /bank:
+    post:
+      operationId: "BankController_createBank"
+      summary: "Create bank"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBankDto"
+      responses:
+        201:
+          description: ""
+      tags:
+        - "bank"
+    get:
+      operationId: "BankController_getAllBanks"
+      summary: "Find all banks"
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/GetBankByIdResponseDto"
+      tags:
+        - "bank"
+  /bank/{id}:
+    put:
+      operationId: "BankController_updateBank"
+      summary: "Update bank by id"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateBankDto"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "bank"
+    delete:
+      operationId: "BankController_deleteBank"
+      summary: "Delete bank by id"
+      parameters: []
+      responses:
+        200:
+          description: ""
+      tags:
+        - "bank"
+    get:
+      operationId: "BankController_getBankById"
+      summary: "Find bank by id"
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetBankByIdResponseDto"
+      tags:
+        - "bank"
+  /transaction:
+    post:
+      operationId: "TransactionController_createTransaction"
+      summary: "Create transaction"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTransactionDto"
+      responses:
+        201:
+          description: ""
+      tags:
+        - "transaction"
+    get:
+      operationId: "TransactionController_getAllTransactions"
+      summary: "Find all transactions"
+      parameters:
+        - name: "limit"
+          required: false
+          in: "query"
+          example: 10
+          schema:
+            type: "number"
+        - name: "offset"
+          required: false
+          in: "query"
+          example: 0
+          schema:
+            type: "number"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FindAllResponse"
+      tags:
+        - "transaction"
+  /transaction/{id}:
+    delete:
+      operationId: "TransactionController_deleteTransaction"
+      summary: "Delete transaction by id"
+      parameters: []
+      responses:
+        200:
+          description: ""
+      tags:
+        - "transaction"
+  /category:
+    post:
+      operationId: "CategoryController_createCategory"
+      summary: "Create category"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryDto"
+      responses:
+        201:
+          description: ""
+      tags:
+        - "category"
+    get:
+      operationId: "CategoryController_getAllCategories"
+      summary: "Find all categories"
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/GetCategoryByIdResponseDto"
+      tags:
+        - "category"
+  /category/{id}:
+    put:
+      operationId: "CategoryController_updateCategory"
+      summary: "Update category by id"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryDto"
+      responses:
+        200:
+          description: ""
+      tags:
+        - "category"
+    delete:
+      operationId: "CategoryController_deleteCategory"
+      summary: "Delete category by id"
+      parameters: []
+      responses:
+        200:
+          description: ""
+      tags:
+        - "category"
+    get:
+      operationId: "CategoryController_getCategoryById"
+      summary: "Find category by id"
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCategoryByIdResponseDto"
+      tags:
+        - "category"
+  /category/statistic:
+    get:
+      operationId: "CategoryController_getStatistic"
+      summary: "Get statistic by categories"
+      parameters:
+        - name: "categoryIds"
+          required: false
+          in: "query"
+          example:
+            - "638097d5-7529-4583-8923-70ad75c48799"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+        - name: "fromPeriod"
+          required: false
+          in: "query"
+          example: "2023-02-23T10:28:24.038Z"
+          schema:
+            type: "string"
+        - name: "toPeriod"
+          required: false
+          in: "query"
+          example: "2023-02-24T20:28:24.038Z"
+          schema:
+            type: "string"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                example:
+                  Apartment: "-4500"
+                  Entertainment: "-2179.79"
+                  Food & drinks: "-4525.32"
+                  Fuel: "-2879.19"
+                  Salary: "27345.22"
+      tags:
+        - "category"
+info:
+  title: "Financial Manager"
+  description: "Financial Manager API documentation"
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CreateBankDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "PrivatBank"
+          description: "Bank name"
+      required:
+        - "name"
+    UpdateBankDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "PrivatBank"
+          description: "Bank name"
+      required:
+        - "name"
+    GetBankByIdResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "404a4ff5-3b7a-4803-b8db-ed75fcae8d2e"
+        name:
+          type: "string"
+          example: "PrivatBank"
+        balance:
+          type: "number"
+          example: "9348.55"
+        createdAt:
+          type: "string"
+          example: "2023-02-23T17:58:50.748Z"
+      required:
+        - "id"
+        - "name"
+        - "balance"
+        - "createdAt"
+    CreateTransactionDto:
+      type: "object"
+      properties:
+        bank:
+          type: "string"
+          example: "404a4ff5-3b7a-4803-b8db-ed75fcae8d2e"
+          description: "Bank id"
+        type:
+          type: "string"
+          example: "profitable"
+          description: "Transaction type"
+        amount:
+          type: "number"
+          example: 10634.45
+          description: "Transaction amount"
+        categories:
+          example:
+            - id: "638097d5-7529-4583-8923-70ad75c48799"
+              createdAt: "2023-02-23T20:26:48.202Z"
+              name: "Salary"
+          description: "Array of category ids"
+          type: "array"
+          items:
+            type: "string"
+      required:
+        - "bank"
+        - "type"
+        - "amount"
+        - "categories"
+    FindAllResponse:
+      type: "object"
+      properties:
+        transactions:
+          example:
+            id: "e07b4bd1-1cce-41ac-ab55-ca472da89bc3"
+            createdAt: "2023-02-24T14:30:27.809Z"
+            amount: 10634.45
+            type: "profitable"
+            categories:
+              - id: "638097d5-7529-4583-8923-70ad75c48799"
+                createdAt: "2023-02-23T20:26:48.202Z"
+                name: "Salary"
+          type: "array"
+          items:
+            type: "string"
+        meta:
+          type: "object"
+          example:
+            totalCount: 1
+      required:
+        - "transactions"
+        - "meta"
+    CreateCategoryDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Salary"
+          description: "Category name"
+      required:
+        - "name"
+    UpdateCategoryDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Salary"
+          description: "Category name"
+      required:
+        - "name"
+    GetCategoryByIdResponseDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "638097d5-7529-4583-8923-70ad75c48799"
+        name:
+          type: "string"
+          example: "Salary"
+        createdAt:
+          type: "string"
+          example: "2023-02-23T20:26:48.202Z"
+      required:
+        - "id"
+        - "name"
+        - "createdAt"
